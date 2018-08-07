@@ -2,6 +2,7 @@
 const cheerio = require("cheerio");
 
 module.exports = page => {
+
   //try-catch block
   // if there are any errors, it'll be caught in the catch block
   try {

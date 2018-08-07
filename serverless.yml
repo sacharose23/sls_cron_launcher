@@ -17,6 +17,9 @@ service: yelp-scraper
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
 
+plugins:
+  - serverless-offline-scheduler
+
 provider:
   name: aws
   runtime: nodejs6.10
@@ -25,6 +28,10 @@ provider:
   environment:
     DYNAMODB_TABLE: yelp-ratings
   iamRoleStatments:
+    - Effect: Allow
+      Action:
+        - "lambda:InvokeFunction"
+      Resource: "*" # any other lambda
     - Effect: Allow
       Action:
         - dynamodb: Query
@@ -74,6 +81,11 @@ package:
 functions:
   scrape:
     handler: handler.scrape
+# added for the cron job  
+  launch_scrapers:
+    handler: handler.launch_scrapers
+    events:
+      - schedule: rate(1 minute)
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

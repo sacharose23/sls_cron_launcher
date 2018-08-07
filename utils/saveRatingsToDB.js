@@ -17,6 +17,7 @@ module.exports = (yelpData, businessName) => {
       scrapedAt: date
     }
   };
+  console.log(params);
   // 
   dynamoDB.put(params, error => {
     if(error) {
